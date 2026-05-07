@@ -1,0 +1,17 @@
+includes:
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
+	- %currentWorkingDirectory%/phpstan-baseline.neon
+
+parameters:
+	phpVersion: 80400
+	level: 8
+	treatPhpDocTypesAsCertain: false
+	reportWrongPhpDocTypeInVarTag: true
+
+	paths:
+		- %currentWorkingDirectory%/
+
+	excludePaths:
+		- %currentWorkingDirectory%/vendor
+
+	reportMaybesInPropertyPhpDocTypes: false

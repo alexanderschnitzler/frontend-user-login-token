@@ -1,0 +1,60 @@
+{
+    "name": "schnitzler/frontend-user-login-token",
+    "description": "A TYPO3 extension that generates frontend user login tokens",
+    "license": "GPL-2.0-or-later",
+    "type": "typo3-cms-extension",
+    "authors": [
+        {
+            "name": "Alexander Schnitzler",
+            "email": "git@alexanderschnitzler.de"
+        }
+    ],
+    "require": {
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "doctrine/dbal": "*",
+        "firebase/php-jwt": "*",
+        "psr/event-dispatcher": "*",
+        "psr/http-message": "*",
+        "psr/http-server-handler": "*",
+        "psr/http-server-middleware": "*",
+        "symfony/console": "*",
+        "typo3/cms-core": "~13.4.0 || ~14.3.0",
+        "typo3/cms-frontend": "~13.4.0 || ~14.3.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "overtrue/phplint": "^9.7",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Schnitzler\\FrontendUserLoginToken\\": "Classes/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "typo3/class-alias-loader": false,
+            "typo3/cms-composer-installers": false
+        },
+        "platform": {
+            "php": "8.2.99"
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "typo3/cms": {
+            "Package": {
+                "providesPackages": {}
+            },
+            "extension-key": "frontend_user_login_token",
+            "version": "14.3.0"
+        }
+    },
+    "scripts": {
+        "cs": "@php vendor/bin/php-cs-fixer fix --verbose --dry-run",
+        "cs:fix": "@php vendor/bin/php-cs-fixer fix --verbose",
+        "phplint": "@php vendor/bin/phplint",
+        "phpstan": "@php vendor/bin/phpstan -v analyse"
+    }
+}

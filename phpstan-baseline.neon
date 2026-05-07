@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property object\:\:\$uid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Classes/Infrastructure/Authentication/Service/AccessTokenAuthenticationService.php
