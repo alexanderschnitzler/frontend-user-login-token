@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\SysLog\Type as SystemLogType;
 
 class AccessTokenAuthenticationService extends AbstractAuthenticationService
 {
-    private bool $serviceIsResponsibleForAuthentication = false;
+    private int|null $tokenUid = null;
 
     public function __construct(
         private readonly FrontendUserRepository $frontendUserRepository,
@@ -43,8 +43,7 @@ class AccessTokenAuthenticationService extends AbstractAuthenticationService
      */
     public function getUser(): array|false
     {
-        // As long as we don't have a login token, this service is not responsible for authentication
-        $this->serviceIsResponsibleForAuthentication = false;
+        $this->tokenUid = null;
 
         $request = $this->authInfo['request'] ?? null;
 
@@ -59,9 +58,6 @@ class AccessTokenAuthenticationService extends AbstractAuthenticationService
             // This service is then asked to fetch a user which is not possible
             return false;
         }
-
-        // Now that we have a login token, this service is responsible for authentication
-        $this->serviceIsResponsibleForAuthentication = true;
 
         try {
             $payload = JWT::decode($loginToken, new Key($GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'], 'HS256'));
@@ -107,6 +103,8 @@ class AccessTokenAuthenticationService extends AbstractAuthenticationService
             return false;
         }
 
+        $this->tokenUid = (int)$user[$frontendUserQueryConfiguration->userIdColumn];
+
         return $user;
     }
 
@@ -125,11 +123,18 @@ class AccessTokenAuthenticationService extends AbstractAuthenticationService
      */
     public function authUser(array $user): int
     {
-        if ($this->serviceIsResponsibleForAuthentication === false) {
+        $uid = (int)$user[$this->authInfo['db_user']['userid_column'] ?? 'uid'];
+
+        // No login token was successfully resolved to a user in getUser(), so this service
+        // is not responsible for authentication. Other auth services will be asked.
+        if ($this->tokenUid === null) {
             return 100;
         }
 
-        $uid = $user[$this->authInfo['db_user']['userid_column'] ?? 'uid'];
+        // Only authenticate the exact user record the login token was issued for
+        if ($uid !== $this->tokenUid) {
+            return 100;
+        }
 
         $this->writelog(
             SystemLogType::LOGIN,

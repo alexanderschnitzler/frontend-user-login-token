@@ -1,0 +1,4 @@
+"fe_users",,,,,
+,"uid","pid","username","password","deleted","disable"
+,1,1,"token-user","$argon2i$v=19$m=65536,t=16,p=1$invalid",0,0
+,2,1,"victim","$argon2i$v=19$m=65536,t=16,p=1$invalid",0,0
