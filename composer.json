@@ -25,7 +25,13 @@
         "friendsofphp/php-cs-fixer": "^3.95",
         "overtrue/phplint": "^9.7",
         "phpstan/phpstan": "^2.1",
-        "phpstan/phpstan-strict-rules": "^2.0"
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "typo3/testing-framework": "^9.2"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Schnitzler\\FrontendUserLoginToken\\Tests\\": "Tests/"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -34,8 +40,8 @@
     },
     "config": {
         "allow-plugins": {
-            "typo3/class-alias-loader": false,
-            "typo3/cms-composer-installers": false
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
         },
         "platform": {
             "php": "8.2.99"
@@ -55,6 +61,7 @@
         "cs": "@php vendor/bin/php-cs-fixer fix --verbose --dry-run",
         "cs:fix": "@php vendor/bin/php-cs-fixer fix --verbose",
         "phplint": "@php vendor/bin/phplint",
-        "phpstan": "@php vendor/bin/phpstan -v analyse"
+        "phpstan": "@php vendor/bin/phpstan -v analyse",
+        "phpunit:functional": "@php vendor/bin/phpunit --display-deprecations --display-phpunit-deprecations -c phpunit.functional.xml"
     }
 }

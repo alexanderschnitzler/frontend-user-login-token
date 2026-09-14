@@ -1,3 +1,6 @@
 /var
 /vendor
 /composer.lock
+/.phplint.cache
+/public
+/.phpunit.cache

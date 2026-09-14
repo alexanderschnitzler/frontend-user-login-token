@@ -8,10 +8,13 @@ parameters:
 	treatPhpDocTypesAsCertain: false
 	reportWrongPhpDocTypeInVarTag: true
 
+	# Listed explicitly instead of analysing the whole project: functional test instances below
+	# public/ symlink the extension back into themselves, so walking the project root loops.
 	paths:
-		- %currentWorkingDirectory%/
-
-	excludePaths:
-		- %currentWorkingDirectory%/vendor
+		- %currentWorkingDirectory%/Classes
+		- %currentWorkingDirectory%/Configuration
+		- %currentWorkingDirectory%/Tests
+		- %currentWorkingDirectory%/ext_emconf.php
+		- %currentWorkingDirectory%/ext_localconf.php
 
 	reportMaybesInPropertyPhpDocTypes: false

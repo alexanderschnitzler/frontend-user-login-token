@@ -19,7 +19,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: intl, mbstring, sodium
+          extensions: intl, mbstring, sodium, pdo_sqlite
           coverage: none
 
       - name: Composer install (lowest)
@@ -38,3 +38,6 @@ jobs:
 
       - name: php-cs-fixer
         run: composer cs
+
+      - name: phpunit (functional)
+        run: composer phpunit:functional

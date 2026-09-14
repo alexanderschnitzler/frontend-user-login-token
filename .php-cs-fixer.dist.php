@@ -27,6 +27,7 @@ $finder = (new Symfony\Component\Finder\Finder())
     ->ignoreDotFiles(false)
     ->ignoreVCS(true)
     ->exclude([
+        'public',
         'var',
         'vendor',
     ])
